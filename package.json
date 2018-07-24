@@ -1,0 +1,26 @@
+{
+  "name": "@wemark/smart-contracts",
+  "version": "1.0.0",
+  "description": "Wemark smart contracts",
+  "main": "truffle.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:WemarkSource/smart-contracts.git"
+  },
+  "scripts": {
+    "test": "scripts/test.sh",
+    "coverage": "scripts/coverage.sh"
+  },
+  "keywords": [
+    "wemark"
+  ],
+  "author": "Wemark Engineering Team <engineering@wenark.com>",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^0.20.4",
+    "zeppelin-solidity": "^1.6.0"
+  },
+  "devDependencies": {
+    "solidity-coverage": "^0.5.5"
+  }
+}
