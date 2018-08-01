@@ -1,5 +1,36 @@
-const Web3 = require('web3');
 const config = require('./config');
+const ProviderEngine = require('web3-provider-engine');
+const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js');
+const FilterSubprovider = require('web3-provider-engine/subproviders/filters.js');
+const subproviders = require('@0xproject/subproviders');
+const LedgerSubprovider = subproviders.LedgerSubprovider;
+const TransportNodeHid = require('@ledgerhq/hw-transport-node-hid').default;
+const Eth = require('@ledgerhq/hw-app-eth').default;
+
+async function ledgerEthereumNodeJsClientFactoryAsync() {
+    const ledgerConnection = await TransportNodeHid.create();
+    const ledgerEthClient = new Eth(ledgerConnection);
+    return ledgerEthClient;
+}
+
+const engine = new ProviderEngine();
+const ledgerSubprovider = new LedgerSubprovider({
+    networkId: 1,
+    baseDerivationPath: "m/44'/60'/0'",
+    ledgerEthereumClientFactoryAsync: ledgerEthereumNodeJsClientFactoryAsync,
+    accountFetchingConfigs: {
+        addressSearchLimit: 100,
+        shouldAskForOnDeviceConfirmation: false
+    }
+});
+
+engine.addProvider(new FilterSubprovider());
+engine.addProvider(ledgerSubprovider);
+engine.addProvider(new RpcSubprovider({
+    rpcUrl: config.INFURA_MAINNET_URL,
+}));
+
+engine.start();
 
 module.exports = {
     networks: {
@@ -17,23 +48,24 @@ module.exports = {
             gas: 0xfffffffffff, // <-- Use this high gas value
             gasPrice: 0x01      // <-- Use this low gas price
         },
-        ropstenInfura: {
-            provider: new Web3.providers.HttpProvider(config.INFURA_ROPSTEN_URL),
-            network_id: 3,
-            gas: 3955555
-        },
-        ropsten: {
-            host: config.ROPSTEN_NODE_URL,
-            network_id: 3,
-            port: 8545,
-            gas: 3955555,
-            gasPrice: 120000000000 // 120 Gwei
-        },
         ganache: {
             network_id: 5777,
             host: 'localhost',
             port: 7545,
             gas: 6721975
+        },
+        ropsten: {
+            host: config.INFURA_ROPSTEN_URL,
+            network_id: 3,
+            port: 8545,
+            gas: 3955555,
+            gasPrice: 120000000000 // 120 Gwei
+        },
+        mainnet: {
+            provider: engine,
+            network_id: 1,
+            gas: 4712388,
+            gasPrice: 2000000000 // 2 Gwei
         }
     },
     solc: {

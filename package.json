@@ -17,7 +17,15 @@
   "author": "Wemark Engineering Team <engineering@wenark.com>",
   "license": "ISC",
   "dependencies": {
+    "@0xproject/subproviders": "^1.0.4",
+    "@ledgerhq/hw-app-eth": "^4.21.0",
+    "@ledgerhq/hw-transport-node-hid": "^4.21.0",
+    "ledger-wallet-provider": "^2.0.1-beta.3",
+    "truffle-hdwallet-provider": "0.0.5",
+    "truffle-ledger-provider": "0.0.3",
+    "truffle-ledger-wallet-provider": "^1.0.0",
     "web3": "^0.20.4",
+    "web3-provider-engine": "^14.0.6",
     "zeppelin-solidity": "^1.6.0"
   },
   "devDependencies": {
