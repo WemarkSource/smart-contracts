@@ -40,4 +40,4 @@ Allows the token owner to control who can transfer tokens. We're using it to all
 Allows us to migrate token functionality to a new contract, at any point in time. This is vital in the case that we would like to fix a critical bug or upgrade the functionality of the token.
 
 #### VestedToken (`lib/token/VestedToken.sol`)
-Allows any token holder to grant tokens to any party under a vesting plan (with start, cliff and vesting points). Our main usage for this feature is distributing the company's allocated tokens (to team, advisory, etc.).
+Allows any token holder to grant tokens to any party under a custom vesting plan. This is used for distributing tokens to our private sale contributors, as well as for tokens allocated to the founders, team, advisors, and partners.
