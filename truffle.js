@@ -6,6 +6,8 @@ const subproviders = require('@0xproject/subproviders');
 const LedgerSubprovider = subproviders.LedgerSubprovider;
 const TransportNodeHid = require('@ledgerhq/hw-transport-node-hid').default;
 const Eth = require('@ledgerhq/hw-app-eth').default;
+const HDWalletProvider = require('truffle-hdwallet-provider');
+
 
 async function ledgerEthereumNodeJsClientFactoryAsync() {
     const ledgerConnection = await TransportNodeHid.create();
@@ -55,11 +57,10 @@ module.exports = {
             gas: 6721975
         },
         ropsten: {
-            host: config.INFURA_ROPSTEN_URL,
+            provider: new HDWalletProvider(config.HD_WALLET_MNEMONIC, config.INFURA_ROPSTEN_URL, 0),
             network_id: 3,
-            port: 8545,
             gas: 3955555,
-            gasPrice: 120000000000 // 120 Gwei
+            gasPrice: 10000000000 // 10 Gwei
         },
         mainnet: {
             provider: engine,
